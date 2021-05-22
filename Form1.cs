@@ -47,6 +47,7 @@ namespace _5
 
         //Начальные условия
         float K = 0.24f; // Коэффициент сопротивления среды
+        //float K = 0f;
         float Ws = 0;
         float B = 0;
         float E = (float)Math.E;
@@ -129,7 +130,14 @@ namespace _5
         {
             FI = ToRad(180 + FI0);
             W0 = -(float)Math.Sqrt(G / L);
-            B = K / (2*M);
+            if (K == 0) {
+                B = 0;
+            }
+            else
+            {
+                B = K / (2 * M);
+            }
+            //B = K / (2*M);
             //B = K;
             Ws = -(float)Math.Sqrt((Math.Pow(W0,2) - Math.Pow(B, 2)));
 
@@ -177,14 +185,14 @@ namespace _5
             zoom = trackBar2.Value / 10;
         }
 
-
+        //кнопка Старт
         private void button1_Click(object sender, EventArgs e)
         {
             Graph.MakeCurrent();
             timer1.Start();
            
         }
-
+        //кнопка Рестарт
         private void button3_Click(object sender, EventArgs e)
         {
             Graph.MakeCurrent();
@@ -200,8 +208,18 @@ namespace _5
 
             FI = ToRad(180 + FI0);
             W0 = (float)Math.Sqrt(G / L);
+
+            if (K == 0)
+            {
+                B = 0;
+            }
+            else
+            {
+                B = K / (2 * M);
+            }
+
             B = K / (2 * M);
-            //B = (float)Convert.ToDouble(textBox5.Text);
+            B = (float)Convert.ToDouble(textBox5.Text);
             Ws = -(float)Math.Sqrt((Math.Pow(W0, 2) - Math.Pow(B, 2)));
 
             arr_v = new float[0, 2];
@@ -220,7 +238,7 @@ namespace _5
         }
 
        
-
+        //кнопка ПАУЗА
         private void button2_Click(object sender, EventArgs e)
         {
             timer1.Stop();
@@ -229,33 +247,34 @@ namespace _5
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                if (Int32.Parse(textBox1.Text) < 1) L = 1;
-                else L = Int32.Parse(textBox1.Text);
+                if (float.Parse(textBox1.Text) < 1) L = 1;
+                else L = float.Parse(textBox1.Text);
         }
 
         private void textBox2_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                if (Int32.Parse(textBox2.Text) < 1) M = 1;
-                else M = Int32.Parse(textBox2.Text);
+                if (float.Parse(textBox2.Text) < 1) M = 1;
+                else M = float.Parse(textBox2.Text);
         }
 
       
 
         private void textBox3_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) FI0 = Int32.Parse(textBox3.Text);
+            if (e.KeyCode == Keys.Enter) FI0 = float.Parse(textBox3.Text);
         }
 
 
         private void textBox4_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) XS = Convert.ToDouble(textBox4.Text);
+            if (e.KeyCode == Keys.Enter) XS = (float)Convert.ToDouble(textBox4.Text);
         }
 
         private void textBox5_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) K = (float)Convert.ToDouble(textBox5.Text);
+
         }
 
 
@@ -359,6 +378,8 @@ namespace _5
             AnT.Invalidate();
         }
 
+
+
         private float ToRad(float fi)
         {
             fi = fi * ((float)Math.PI / 180);
@@ -387,7 +408,7 @@ namespace _5
             X = (float)Math.Sin(FI) * L;
             V = (float)(-A * Ws * Math.Sin(Ws * time));
             
-
+            
             Ep = M * G * H;
             Ek = (M * (V * V)) / 2 * 100;
 
@@ -404,18 +425,17 @@ namespace _5
             Gl.glTranslated(1, 1, 0);
 
             Gl.glColor4f(0,0.5f,1,1f);
-
+            //РИСУЕМ ФОН ДЛЯ ГРАФИКА Ep
             Gl.glBegin(Gl.GL_QUADS);
-
-            Gl.glVertex2d(2, 0);
-            Gl.glVertex2d(2, 38);
-            Gl.glVertex2d(9, 38);
-            Gl.glVertex2d(9, 0);
-
+                Gl.glVertex2d(2, 0);
+                Gl.glVertex2d(2, 38);
+                Gl.glVertex2d(9, 38);
+                Gl.glVertex2d(9, 0);
             Gl.glEnd();
-
+            
             Gl.glColor4f(1, 0.5f, 0, 1f);
-
+            ////////////////////////
+            //РИСУЕМ ФОН ДЛЯ ГРАФИКА Ek
             Gl.glBegin(Gl.GL_QUADS);
                 Gl.glVertex2d(10, 0);
                 Gl.glVertex2d(10, 38);
@@ -425,8 +445,9 @@ namespace _5
 
             Gl.glTranslated(1.5, 0, 0);
             Gl.glColor3f(0, 0, 0);
-
-            for (int i = 0; i < 50; i += 5)
+            //////////////////////////
+            
+            for (int i = 0; i < 50; i += 1)
             {
                 Gl.glBegin(Gl.GL_LINES);
                     Gl.glVertex2d(0, i);
@@ -443,12 +464,12 @@ namespace _5
 
                 PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) / 10f)).ToString());
             }
-
+            
             Gl.glBegin(Gl.GL_LINES);
                 Gl.glVertex2d(0, -5);
                 Gl.glVertex2d(0, 45);
             Gl.glEnd();
-
+            
             Gl.glTranslated(-1.5, 0, 0);
 
             Gl.glColor4f(1, 1f, 0.5f, 1f);
