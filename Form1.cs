@@ -246,14 +246,14 @@ namespace _5
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+         
                 if (float.Parse(textBox1.Text) < 1) L = 1;
                 else L = float.Parse(textBox1.Text);
         }
 
         private void textBox2_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+           
                 if (float.Parse(textBox2.Text) < 1) M = 1;
                 else M = float.Parse(textBox2.Text);
         }
@@ -262,18 +262,18 @@ namespace _5
 
         private void textBox3_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) FI0 = float.Parse(textBox3.Text);
+            FI0 = float.Parse(textBox3.Text);
         }
 
 
         private void textBox4_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) XS = (float)Convert.ToDouble(textBox4.Text);
+             XS = (float)Convert.ToDouble(textBox4.Text);
         }
 
         private void textBox5_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) K = (float)Convert.ToDouble(textBox5.Text);
+            K = (float)Convert.ToDouble(textBox5.Text);
 
         }
 
