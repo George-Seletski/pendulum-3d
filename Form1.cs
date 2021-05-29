@@ -43,6 +43,9 @@ namespace _5
         float Ep = 0; // потениальная энергия
         float Ek = 0; // кинетическая энергия
 
+        float M_Ep = 0; //максимальная потенциальная э
+        float M_Ek = 0; //максимальная кинетическая э
+
         int graphic = 0;
 
         //Начальные условия
@@ -53,6 +56,8 @@ namespace _5
         float E = (float)Math.E;
         float G = 9.81f;//сила тяжести
         float FI0 = 20;
+
+
 
         float time = 0;
 
@@ -124,6 +129,7 @@ namespace _5
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glEnable(Gl.GL_LIGHTING);
             Gl.glEnable(Gl.GL_LIGHT0);
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -145,6 +151,7 @@ namespace _5
             X = (float)Math.Sin(FI) * L;
             V = (float)Math.Sin(FI) * G;
 
+        
 
             Glut.glutInit();
             Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE);
@@ -159,7 +166,10 @@ namespace _5
             textBox3.Text = FI0.ToString();
             textBox4.Text = XS.ToString();
             textBox5.Text = K.ToString();
+        
+            M_Ep = M * G * (L - (float)Math.Cos(FI) * L);
 
+           
             comboBox1.SelectedIndex = 0;
         }
 
@@ -188,7 +198,9 @@ namespace _5
         //кнопка Старт
         private void button1_Click(object sender, EventArgs e)
         {
+
             Graph.MakeCurrent();
+
             timer1.Start();
            
         }
@@ -401,6 +413,8 @@ namespace _5
 
         private void calc()
         {
+     
+
             H = L - (float)Math.Cos(FI) * L;
             A = (float)(ToRad(FI0) * Math.Pow(E, -B * time));
             FI = (float)(A * Math.Cos(Ws * time));
@@ -410,7 +424,8 @@ namespace _5
             
             
             Ep = M * G * H;
-            Ek = (M * (V * V)) / 2 * 100;
+            //Ek = (M * (V * V)) / 2 * 100;
+            Ek = (M * (V * V)) / 2*100 ;
 
         }
 
@@ -447,7 +462,7 @@ namespace _5
             Gl.glColor3f(0, 0, 0);
             //////////////////////////
             
-            for (int i = 0; i < 50; i += 1)
+            for (int i = 0; i < 37.5; i += 1)
             {
                 Gl.glBegin(Gl.GL_LINES);
                     Gl.glVertex2d(0, i);
@@ -633,7 +648,8 @@ namespace _5
             label23.Text = (Math.Round(Ep, 2)).ToString();
             label25.Text = (Math.Round(Ek, 2)).ToString();
             label27.Text = (Math.Round(H, 2)).ToString();
-
+            label34.Text = (Math.Round(M_Ep, 2)).ToString();
+            label36.Text = (Math.Round(M_Ek, 2)).ToString();
             if (XG > Graph.Width * devX / 2 / XS)
             {
                 Gl.glTranslated(-XG * XS + Graph.Width * devX / 2 , 0, 0);

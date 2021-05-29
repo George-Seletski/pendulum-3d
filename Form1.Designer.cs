@@ -76,6 +76,10 @@
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.SuspendLayout();
@@ -543,11 +547,51 @@
             this.label32.TabIndex = 45;
             this.label32.Text = "Eкин.";
             // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(754, 678);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(67, 20);
+            this.label33.TabIndex = 46;
+            this.label33.Text = "Ep_max";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(843, 678);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(18, 20);
+            this.label34.TabIndex = 47;
+            this.label34.Text = "0";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(761, 716);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(99, 30);
+            this.label35.TabIndex = 48;
+            this.label35.Text = "Ek_max";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(843, 716);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(18, 20);
+            this.label36.TabIndex = 49;
+            this.label36.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(916, 834);
+            this.Controls.Add(this.label36);
+            this.Controls.Add(this.label35);
+            this.Controls.Add(this.label34);
+            this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.label31);
             this.Controls.Add(this.label30);
@@ -655,6 +699,10 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label36;
     }
 }
 
