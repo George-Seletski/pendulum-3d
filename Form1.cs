@@ -144,7 +144,7 @@ namespace _5
                 B = K / (2 * M);
             }
             //B = K / (2*M);
-            //B = K;
+           // B = K;
             Ws = -(float)Math.Sqrt((Math.Pow(W0,2) - Math.Pow(B, 2)));
 
 
@@ -167,7 +167,7 @@ namespace _5
             textBox4.Text = XS.ToString();
             textBox5.Text = K.ToString();
         
-            M_Ep = M * G * (L - (float)Math.Cos(FI) * L);
+            //M_Ep = M * G * (L - (float)Math.Cos(FI) * L);
 
            
             comboBox1.SelectedIndex = 0;
@@ -424,8 +424,23 @@ namespace _5
             
             
             Ep = M * G * H;
-            //Ek = (M * (V * V)) / 2 * 100;
-            Ek = (M * (V * V)) / 2*100 ;
+            Ek = (M * (V * V)) / 2 * 100;
+
+            if (Ep == 0)
+            {
+                M_Ek  = Ek;
+
+            }
+            else
+            {
+                if (Ek == 0)
+                {
+                    M_Ep = Ep;
+                }
+
+            }
+
+
 
         }
 
@@ -462,22 +477,25 @@ namespace _5
             Gl.glColor3f(0, 0, 0);
             //////////////////////////
             
-            for (int i = 0; i < 37.5; i += 1)
+            for (int i = 0; i < 30; i += 1)
             {
                 Gl.glBegin(Gl.GL_LINES);
                     Gl.glVertex2d(0, i);
                     Gl.glVertex2d(-0.5, i);
 
                     Gl.glVertex2d(0, ((i - 2.5f)));
-                    Gl.glVertex2d(-0.3, ((i - 2.5f)));
+                   //Gl.glVertex2d(-0.3, ((i - 2.5f)));
                 Gl.glEnd();
 
                 if (i < 0)
                 {
                     PrintText2D((float)(-2.8), (float)((i - 0.45)), "-");
+                   
+
                 }
 
-                PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) / 10f)).ToString());
+                //PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) / 10f)).ToString());
+                PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) )).ToString());
             }
             
             Gl.glBegin(Gl.GL_LINES);
