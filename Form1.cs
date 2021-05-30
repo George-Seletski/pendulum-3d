@@ -134,6 +134,7 @@ namespace _5
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             FI = ToRad(180 + FI0);
             W0 = -(float)Math.Sqrt(G / L);
             if (K == 0) {
@@ -166,8 +167,8 @@ namespace _5
             textBox3.Text = FI0.ToString();
             textBox4.Text = XS.ToString();
             textBox5.Text = K.ToString();
-        
-            //M_Ep = M * G * (L - (float)Math.Cos(FI) * L);
+
+           
 
            
             comboBox1.SelectedIndex = 0;
@@ -200,7 +201,6 @@ namespace _5
         {
 
             Graph.MakeCurrent();
-
             timer1.Start();
            
         }
@@ -413,7 +413,6 @@ namespace _5
 
         private void calc()
         {
-     
 
             H = L - (float)Math.Cos(FI) * L;
             A = (float)(ToRad(FI0) * Math.Pow(E, -B * time));
@@ -424,28 +423,33 @@ namespace _5
             
             
             Ep = M * G * H;
-            Ek = (M * (V * V)) / 2 * 100;
+
+            //Ek = (M * (V * V)) / 2 * 100;
+            Ek = (M * (V * V)) / 2*100;
+
 
             if (Ep == 0)
-            {
-                M_Ek  = Ek;
+             {
+             M_Ek  = Ek;
+             }
 
-            }
-            else
+            if (Ek == 0)
             {
-                if (Ek == 0)
-                {
-                    M_Ep = Ep;
-                }
-
+             M_Ep = Ep;
             }
 
+             
 
 
         }
 
         private void DrawE()
         {
+            float Ep2 = 0;
+            float Ek2 = 0;
+
+            //Ep2 = Ep / 39;
+            //Ek2 = M_Ek / 39;
             Diagram.MakeCurrent();
             Glu.gluOrtho2D(0.0, 20, 0.0, 40);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
@@ -477,25 +481,25 @@ namespace _5
             Gl.glColor3f(0, 0, 0);
             //////////////////////////
             
-            for (int i = 0; i < 30; i += 1)
+            for (int i = 0; i < 39; i += 2)
             {
-                Gl.glBegin(Gl.GL_LINES);
-                    Gl.glVertex2d(0, i);
-                    Gl.glVertex2d(-0.5, i);
+                /*Gl.glBegin(Gl.GL_LINES);
+                Gl.glVertex2d(0, i);
+                Gl.glVertex2d(-0.5, i);
 
-                    Gl.glVertex2d(0, ((i - 2.5f)));
+                 Gl.glVertex2d(0, ((i - 2.5f)));
                    //Gl.glVertex2d(-0.3, ((i - 2.5f)));
-                Gl.glEnd();
+                Gl.glEnd();*/
 
-                if (i < 0)
+                /*if (i < 0)
                 {
                     PrintText2D((float)(-2.8), (float)((i - 0.45)), "-");
                    
 
-                }
+                }*/
 
                 //PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) / 10f)).ToString());
-                PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) )).ToString());
+                PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(i*39) )).ToString());
             }
             
             Gl.glBegin(Gl.GL_LINES);
@@ -507,7 +511,7 @@ namespace _5
 
             Gl.glColor4f(1, 1f, 0.5f, 1f);
 
-            if (Ep > 37.8)
+            /*if (Ep > 37.8)
             {
                 Gl.glBegin(Gl.GL_QUADS);
 
@@ -519,18 +523,18 @@ namespace _5
                 Gl.glEnd();
             }
             else
-            { 
+            { */
 
             Gl.glBegin(Gl.GL_QUADS);
 
             Gl.glVertex2d(2.2, 0.2);
-            Gl.glVertex2d(2.2, Ep);
-            Gl.glVertex2d(8.8, Ep);
+            Gl.glVertex2d(2.2, Ep/39);
+            Gl.glVertex2d(8.8, Ep/39);
             Gl.glVertex2d(8.8, 0.2);
 
             Gl.glEnd();
 
-            }
+            //}
 
             Gl.glColor4f(1, 1f, 0.5f, 1f);
 
@@ -663,11 +667,12 @@ namespace _5
             label16.Text = (Math.Round(W0, 2)).ToString();
             label19.Text = (Math.Round(X, 2)).ToString();
             label21.Text = (Math.Round(V,2)).ToString();
-            label23.Text = (Math.Round(Ep, 2)).ToString();
-            label25.Text = (Math.Round(Ek, 2)).ToString();
+            label23.Text = (Math.Round(Ep*39, 2)).ToString();
+            label25.Text = (Math.Round(Ek*39, 2)).ToString();
             label27.Text = (Math.Round(H, 2)).ToString();
             label34.Text = (Math.Round(M_Ep, 2)).ToString();
             label36.Text = (Math.Round(M_Ek, 2)).ToString();
+
             if (XG > Graph.Width * devX / 2 / XS)
             {
                 Gl.glTranslated(-XG * XS + Graph.Width * devX / 2 , 0, 0);
