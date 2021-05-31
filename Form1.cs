@@ -199,7 +199,8 @@ namespace _5
         //кнопка Старт
         private void button1_Click(object sender, EventArgs e)
         {
-
+            M_Ek = 0;
+            M_Ep = 0;
             Graph.MakeCurrent();
             timer1.Start();
            
@@ -207,6 +208,9 @@ namespace _5
         //кнопка Рестарт
         private void button3_Click(object sender, EventArgs e)
         {
+
+            M_Ep = (M * G * (L - (float)Math.Cos(FI) * L)) / 100;
+           // Math.Round(M_Ep, 2);
             Graph.MakeCurrent();
 
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
@@ -270,13 +274,10 @@ namespace _5
                 else M = float.Parse(textBox2.Text);
         }
 
-      
-
         private void textBox3_KeyUp(object sender, KeyEventArgs e)
         {
             FI0 = float.Parse(textBox3.Text);
         }
-
 
         private void textBox4_KeyUp(object sender, KeyEventArgs e)
         {
@@ -288,7 +289,6 @@ namespace _5
             K = (float)Convert.ToDouble(textBox5.Text);
 
         }
-
 
         private void Graph_MouseMove(object sender, MouseEventArgs e)
         {
@@ -391,14 +391,12 @@ namespace _5
         }
 
 
-
         private float ToRad(float fi)
         {
             fi = fi * ((float)Math.PI / 180);
             return fi;
         }
 
-       
 
         private float ToGr(float fi)
         {
@@ -428,25 +426,28 @@ namespace _5
             Ek = (M * (V * V)) / 2*100;
 
 
-            if (Ep == 0)
+            if (Math.Round(Ep,2) == 0.01)
              {
              M_Ek  = Ek;
-             }
-
-            if (Ek == 0)
-            {
-             M_Ep = Ep;
+             Math.Round(M_Ek, 2);
             }
 
-             
+            if (Math.Round(Ek, 2) == 0.01)
+            {
+                M_Ep = Ep;
+                Math.Round(M_Ep,2);
+               
+            }
+
+            //Console.Write("M_Ek " + M_Ek);
 
 
         }
 
         private void DrawE()
         {
-            float Ep2 = 0;
-            float Ek2 = 0;
+            float tmp = 0;
+         
 
             //Ep2 = Ep / 39;
             //Ek2 = M_Ek / 39;
@@ -480,28 +481,49 @@ namespace _5
             Gl.glTranslated(1.5, 0, 0);
             Gl.glColor3f(0, 0, 0);
             //////////////////////////
-            
-            for (int i = 0; i < 39; i += 2)
+            //tmp =(float)( M_Ep / 37.8f);
+            if (M_Ep > 38)
             {
-                /*Gl.glBegin(Gl.GL_LINES);
+                //tmp = (M_Ep + (38f - (float)M_Ep));
+                tmp = M_Ep / 10f;
+            }
+            else
+            {
+                tmp = M_Ep;
+            }
+            
+            for (float i = 0; i < tmp; i += 1f)
+            {
+                /*
+                  Gl.glBegin(Gl.GL_LINES);
                 Gl.glVertex2d(0, i);
                 Gl.glVertex2d(-0.5, i);
 
                  Gl.glVertex2d(0, ((i - 2.5f)));
                    //Gl.glVertex2d(-0.3, ((i - 2.5f)));
-                Gl.glEnd();*/
+                Gl.glEnd();
 
-                /*if (i < 0)
+                if (i < 0)
                 {
                     PrintText2D((float)(-2.8), (float)((i - 0.45)), "-");
-                   
-
                 }*/
 
-                //PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) / 10f)).ToString());
-                PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(i*39) )).ToString());
+                //PrintText2D((float)(-2), (float)((i - 0.45)), ((float)(Math.Abs(i) / 100f)).ToString());
+                // PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(i) )).ToString());
+                if (i > 9)
+                {
+                    PrintText2D((float)(-2.4), (float)((i-0.45)), ((float)(Math.Abs(i))/10f).ToString());
+                  
+                }
+                else
+                {
+                    PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(i))/10f).ToString());
+                }
+               
+                //PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(Math.Round(M_Ep,2)) / (float)(Math.Abs(i)))).ToString());
+
             }
-            
+
             Gl.glBegin(Gl.GL_LINES);
                 Gl.glVertex2d(0, -5);
                 Gl.glVertex2d(0, 45);
@@ -523,40 +545,63 @@ namespace _5
                 Gl.glEnd();
             }
             else
-            { */
+            {
 
             Gl.glBegin(Gl.GL_QUADS);
 
             Gl.glVertex2d(2.2, 0.2);
-            Gl.glVertex2d(2.2, Ep/39);
-            Gl.glVertex2d(8.8, Ep/39);
+            Gl.glVertex2d(2.2, Ep);
+            Gl.glVertex2d(8.8, Ep);
             Gl.glVertex2d(8.8, 0.2);
 
             Gl.glEnd();
 
-            //}
+            }*/
+
+
+                Gl.glBegin(Gl.GL_QUADS);
+
+                Gl.glVertex2d(2.2, 0.2);
+                Gl.glVertex2d(2.2, (float)Ep/10f);
+                Gl.glVertex2d(8.8, (float)Ep/10f);
+                // Gl.glVertex2d(2.2, Ep);
+                // Gl.glVertex2d(8.8, Ep);
+
+                Gl.glVertex2d(8.8, 0.2);
+
+                Gl.glEnd();
+    
 
             Gl.glColor4f(1, 1f, 0.5f, 1f);
 
-            if (Ek > 37.8)
-            {
-                Gl.glBegin(Gl.GL_QUADS);
-                Gl.glVertex2d(10.2, 0.2);
-                Gl.glVertex2d(10.2, 37.8);
-                Gl.glVertex2d(16.8, 37.8);
-                Gl.glVertex2d(16.8, 0.2);
-                Gl.glEnd();
-            }
-            else
-            {
-                Gl.glBegin(Gl.GL_QUADS);
-                Gl.glVertex2d(10.2, 0.2);
-                Gl.glVertex2d(10.2, Ek);
-                Gl.glVertex2d(16.8, Ek);
-                Gl.glVertex2d(16.8, 0.2);
-                Gl.glEnd();
-            }
+            /* if (Ek > 37.8)
+             {
+                 Gl.glBegin(Gl.GL_QUADS);
+                 Gl.glVertex2d(10.2, 0.2);
+                 Gl.glVertex2d(10.2, 37.8);
+                 Gl.glVertex2d(16.8, 37.8);
+                 Gl.glVertex2d(16.8, 0.2);
+                 Gl.glEnd();
+             }
+             else
+             {
+                 Gl.glBegin(Gl.GL_QUADS);
+                 Gl.glVertex2d(10.2, 0.2);
+                 Gl.glVertex2d(10.2, Ek);
+                 Gl.glVertex2d(16.8, Ek);
+                 Gl.glVertex2d(16.8, 0.2);
+                 Gl.glEnd();
+             }
+            */
 
+                Gl.glBegin(Gl.GL_QUADS);
+                Gl.glVertex2d(10.2, 0.2);
+  
+                Gl.glVertex2d(10.2, Ek/10f);
+                Gl.glVertex2d(16.8, Ek/10f);
+
+                Gl.glVertex2d(16.8, 0.2);
+                Gl.glEnd();
 
             Gl.glColor3f(0, 0, 0);
             Diagram.Invalidate();
@@ -667,12 +712,13 @@ namespace _5
             label16.Text = (Math.Round(W0, 2)).ToString();
             label19.Text = (Math.Round(X, 2)).ToString();
             label21.Text = (Math.Round(V,2)).ToString();
-            label23.Text = (Math.Round(Ep*39, 2)).ToString();
-            label25.Text = (Math.Round(Ek*39, 2)).ToString();
+            label23.Text = (Math.Round(Ep, 2)).ToString();
+            label25.Text = (Math.Round(Ek, 2)).ToString();
             label27.Text = (Math.Round(H, 2)).ToString();
             label34.Text = (Math.Round(M_Ep, 2)).ToString();
             label36.Text = (Math.Round(M_Ek, 2)).ToString();
 
+            System.Diagnostics.Debug.WriteLine(M_Ek);
             if (XG > Graph.Width * devX / 2 / XS)
             {
                 Gl.glTranslated(-XG * XS + Graph.Width * devX / 2 , 0, 0);
