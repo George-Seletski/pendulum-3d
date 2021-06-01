@@ -482,16 +482,18 @@ namespace _5
             Gl.glColor3f(0, 0, 0);
             //////////////////////////
             //tmp =(float)( M_Ep / 37.8f);
-            if (M_Ep > 38)
-            {
-                //tmp = (M_Ep + (38f - (float)M_Ep));
-                tmp = M_Ep / 10f;
-            }
-            else
-            {
-                tmp = M_Ep;
-            }
-            
+            /* if (M_Ep > 38)
+             {
+                 //tmp = (M_Ep + (38f - (float)M_Ep));
+                 tmp = M_Ep / 10f;
+             }
+             else
+             {
+                 tmp = M_Ep;
+             }*/
+
+            tmp = M_Ep;
+
             for (float i = 0; i < tmp; i += 1f)
             {
                 /*
@@ -512,12 +514,12 @@ namespace _5
                 // PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(i) )).ToString());
                 if (i > 9)
                 {
-                    PrintText2D((float)(-2.4), (float)((i-0.45)), ((float)(Math.Abs(i))/10f).ToString());
+                    PrintText2D((float)(-2.4), (float)((i-0.45)), ((float)(Math.Abs(i)) ).ToString());
                   
                 }
                 else
                 {
-                    PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(i))/10f).ToString());
+                    PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(i)) ).ToString());
                 }
                
                 //PrintText2D((float)(-2.3), (float)((i - 0.45)), ((float)(Math.Abs(Math.Round(M_Ep,2)) / (float)(Math.Abs(i)))).ToString());
@@ -562,8 +564,8 @@ namespace _5
                 Gl.glBegin(Gl.GL_QUADS);
 
                 Gl.glVertex2d(2.2, 0.2);
-                Gl.glVertex2d(2.2, (float)Ep/10f);
-                Gl.glVertex2d(8.8, (float)Ep/10f);
+                Gl.glVertex2d(2.2, Ep);
+                Gl.glVertex2d(8.8, Ep);
                 // Gl.glVertex2d(2.2, Ep);
                 // Gl.glVertex2d(8.8, Ep);
 
@@ -597,8 +599,8 @@ namespace _5
                 Gl.glBegin(Gl.GL_QUADS);
                 Gl.glVertex2d(10.2, 0.2);
   
-                Gl.glVertex2d(10.2, Ek/10f);
-                Gl.glVertex2d(16.8, Ek/10f);
+                Gl.glVertex2d(10.2, Ek);
+                Gl.glVertex2d(16.8, Ek);
 
                 Gl.glVertex2d(16.8, 0.2);
                 Gl.glEnd();
